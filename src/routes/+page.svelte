@@ -94,7 +94,7 @@
   >
     <div class="flex items-center gap-2">
       <svg
-        class="w-5 h-5 flex-shrink-0"
+        class="w-5 h-5 shrink-0"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -199,8 +199,7 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Output</label
-        >
+        <span class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Output</span>
         <div
           class="w-full h-[calc(100%-2rem)] min-h-96 p-4 font-mono text-sm rounded-lg border overflow-auto whitespace-pre-wrap bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           class:text-red-600={error}

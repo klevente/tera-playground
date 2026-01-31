@@ -27,6 +27,6 @@ export default ts.config(
     }
   },
   {
-    ignores: ["build/", ".svelte-kit/", "dist/", "src/lib/wasm/"]
+    ignores: ["build/", ".svelte-kit/", ".vercel/", "dist/", "src/lib/wasm/"]
   }
 );
