@@ -1,11 +1,11 @@
 <script lang="ts">
   import "../app.css";
   import { browser } from "$app/environment";
-  import { onMount } from "svelte";
+  import { onMount, type Snippet } from "svelte";
 
   type Theme = "light" | "dark" | "system";
 
-  let { children } = $props();
+  let { children }: { children: Snippet } = $props();
 
   // Initialize from localStorage immediately on client to avoid flash
   function getInitialTheme(): Theme {
