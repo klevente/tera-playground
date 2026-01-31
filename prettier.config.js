@@ -5,6 +5,7 @@ export default {
   singleQuote: false,
   trailingComma: "none",
   printWidth: 100,
+  endOfLine: "lf",
   plugins: ["prettier-plugin-svelte"],
   overrides: [
     {
