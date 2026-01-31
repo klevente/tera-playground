@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { initTera, renderTemplate } from "$lib/tera";
   import { downloadPlaygroundFile, openFileDialog, parseImportData } from "$lib/playground-file";
 
@@ -120,9 +121,19 @@
 {/if}
 
 {#if isLoading}
-  <div class="text-center text-gray-500 dark:text-gray-400">Loading WASM module...</div>
+  <div class="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+    <div class="relative">
+      <div
+        class="w-12 h-12 rounded-full border-4 border-gray-200 dark:border-gray-700 border-t-blue-500 dark:border-t-blue-400 animate-spin"
+      ></div>
+    </div>
+    <div class="text-center">
+      <p class="text-lg font-medium text-gray-700 dark:text-gray-300">Loading Tera</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">Initializing WASM module...</p>
+    </div>
+  </div>
 {:else}
-  <div class="max-w-7xl mx-auto">
+  <div class="max-w-7xl mx-auto" in:fade={{ duration: 300 }}>
     <div class="flex items-center justify-end gap-2 mb-4">
       <button
         onclick={handleImport}
