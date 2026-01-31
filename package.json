@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run wasm:build && vite dev",
-    "build": "npm run wasm:build && vite build",
+    "dev": "vite dev",
+    "dev:wasm": "npm run wasm:build && vite dev",
+    "build": "vite build",
+    "build:full": "npm run wasm:build && vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -13,7 +15,7 @@
     "wasm:build": "wasm-pack build ./wasm --target web --out-dir ../src/lib/wasm"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^4.0.0",
+    "@sveltejs/adapter-vercel": "^6.3.1",
     "@sveltejs/kit": "^2.21.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@tailwindcss/vite": "^4.0.0",

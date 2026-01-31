@@ -1,4 +1,5 @@
 .idea/
+.vercel/
 node_modules/
 .svelte-kit/
 build/
@@ -9,8 +10,8 @@ dist/
 .env.*
 !.env.example
 
-# WASM build output
-src/lib/wasm/
+# WASM build output (committed for Vercel deployment)
+# src/lib/wasm/
 wasm/target/
 wasm/Cargo.lock
 nul
