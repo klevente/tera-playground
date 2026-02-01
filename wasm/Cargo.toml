@@ -7,11 +7,11 @@ edition = "2024"
 crate-type = ["cdylib"]
 
 [dependencies]
-tera = "1"
-wasm-bindgen = "0.2"
-serde_json = "1"
-console_error_panic_hook = "0.1"
-getrandom = { version = "0.2", features = ["js"] }
+tera = "1.20.1"
+wasm-bindgen = "0.2.108"
+serde_json = "1.0.149"
+console_error_panic_hook = "0.1.7"
+getrandom = { version = "0.2.17", features = ["js"] }
 
 [profile.release]
 opt-level = "z"
