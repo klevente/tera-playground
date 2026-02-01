@@ -50,7 +50,7 @@
   {@const isActive = mounted && theme === value}
   <button
     onclick={() => setTheme(value)}
-    class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+    class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors hover:bg-white/50 dark:hover:bg-gray-700/50"
     class:bg-white={isActive}
     class:dark:bg-gray-700={isActive}
     class:shadow-sm={isActive}
