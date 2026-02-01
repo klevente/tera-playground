@@ -170,7 +170,9 @@
             for="template"
             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
           >
-            Template (<a class="text-blue-500" href="https://keats.github.io/tera/" target="_blank">Tera syntax</a>)
+            Template (<a class="text-blue-500" href="https://keats.github.io/tera/" target="_blank"
+              >Tera syntax</a
+            >)
           </label>
           <textarea
             id="template"
