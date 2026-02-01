@@ -61,5 +61,13 @@ jobs:
       - name: Build WASM
         run: npm run wasm:build
 
+      - name: Check WASM is up-to-date
+        run: |
+          if ! git diff --quiet src/lib/wasm/ || [ -n "$(git ls-files --others --exclude-standard src/lib/wasm/)" ]; then
+            echo "::error::Committed WASM build is out of date. Please run 'npm run wasm:build' and commit the changes."
+            git status src/lib/wasm/
+            exit 1
+          fi
+
       - name: Run Svelte check
         run: npm run check
