@@ -3,6 +3,7 @@
   import { fade } from "svelte/transition";
   import { initTera, renderTemplate } from "$lib/tera";
   import { downloadPlaygroundFile, openFileDialog, parseImportData } from "$lib/playground-file";
+  import { emojify } from "$lib/emoji";
 
   let template = $state("Hello {{ name }}!");
   let contextJson = $state('{\n  "name": "World"\n}');
@@ -11,6 +12,7 @@
   let isLoading = $state(true);
   let importError = $state("");
   let autoFormatOnBlur = $state(true);
+  let renderEmojis = $state(false);
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let importErrorTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -243,7 +245,17 @@
       </div>
 
       <div>
-        <span class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Output</span>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Output</span>
+          <label class="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
+            <input
+              type="checkbox"
+              bind:checked={renderEmojis}
+              class="w-3.5 h-3.5 rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+            />
+            Render emojis
+          </label>
+        </div>
         <div
           class="w-full h-[calc(100%-2rem)] min-h-96 p-4 font-mono text-sm rounded-lg border overflow-auto whitespace-pre-wrap bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           class:text-red-600={error}
@@ -253,7 +265,7 @@
           {#if error}
             {error}
           {:else}
-            {output}
+            {renderEmojis ? emojify(output) : output}
           {/if}
         </div>
       </div>
