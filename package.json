@@ -20,6 +20,7 @@
     "@sveltejs/kit": "2.50.1",
     "@sveltejs/vite-plugin-svelte": "6.2.4",
     "@tailwindcss/vite": "4.1.18",
+    "@types/emoji-js": "3.5.2",
     "@types/node": "24.1.0",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
@@ -36,5 +37,8 @@
     "vite-plugin-top-level-await": "1.6.0",
     "vite-plugin-wasm": "3.5.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "emoji-js": "3.9.0"
+  }
 }
