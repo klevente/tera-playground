@@ -35,7 +35,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24.11.1"
           cache: "npm"
 
       - name: Install npm dependencies
@@ -56,7 +56,7 @@ jobs:
         run: npm run lint
 
       - name: Install wasm-pack
-        run: cargo install wasm-pack --locked
+        run: command -v wasm-pack || cargo install wasm-pack --locked
 
       - name: Build WASM
         run: npm run wasm:build

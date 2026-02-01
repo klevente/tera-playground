@@ -10,6 +10,7 @@
   let error = $state("");
   let isLoading = $state(true);
   let importError = $state("");
+  let autoFormatOnBlur = $state(true);
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let importErrorTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -44,6 +45,17 @@
     } else {
       output = "";
       error = result.error;
+    }
+  }
+
+  function formatJson() {
+    try {
+      const parsed = JSON.parse(contextJson);
+      contextJson = JSON.stringify(parsed, null, 2);
+      doRender();
+    } catch {
+      // JSON is invalid - doRender will show the error
+      doRender();
     }
   }
 
@@ -184,16 +196,46 @@
         </div>
 
         <div>
-          <label
-            for="context"
-            class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
-          >
-            Context (JSON)
-          </label>
+          <div class="flex items-center justify-between mb-2">
+            <label for="context" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Context (JSON)
+            </label>
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
+                <input
+                  type="checkbox"
+                  bind:checked={autoFormatOnBlur}
+                  onchange={() => autoFormatOnBlur && formatJson()}
+                  class="w-3.5 h-3.5 rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                />
+                Auto-format
+              </label>
+              <button
+                onclick={formatJson}
+                class="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700"
+              >
+                <svg
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                  />
+                </svg>
+                Format
+              </button>
+            </div>
+          </div>
           <textarea
             id="context"
             bind:value={contextJson}
             oninput={handleInput}
+            onblur={() => autoFormatOnBlur && formatJson()}
             class="w-full h-48 p-4 font-mono text-sm rounded-lg border resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700"
             placeholder={'{"key": "value"}'}
           ></textarea>
