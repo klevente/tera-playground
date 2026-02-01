@@ -1,6 +1,7 @@
 # Tera Playground
 
-A Svelte 5 web application for experimenting with Tera templates. The app loads Tera as a WASM module and provides a live template editor.
+A Svelte 5 web application for experimenting with Tera templates. The app loads Tera as a WASM module and provides a
+live template editor.
 
 ## Tech Stack
 
@@ -18,7 +19,7 @@ tera-playground/
 ├── src/
 │   ├── routes/
 │   │   ├── +page.svelte       # Main playground UI
-│   │   └── +layout.svelte     # Root layout
+│   │   └── +layout.svelte     # Root layout & Theme selector
 │   ├── lib/
 │   │   ├── tera.ts            # WASM bindings & TypeScript types
 │   │   └── wasm/              # Generated WASM output (gitignored)
@@ -66,8 +67,8 @@ cargo fmt
 
 ## Prerequisites
 
-- Node.js 18+
-- Rust toolchain
+- Node.js 24 (check `.nvmrc`)
+- Rust toolchain (check `wasm/rust-toolchain.toml`)
 - wasm-pack (`cargo install wasm-pack`)
 
 ## How It Works
@@ -77,3 +78,5 @@ cargo fmt
 3. Users enter a Tera template and JSON context
 4. Rendering happens automatically with 300ms debounce, or on button click
 5. Errors are displayed inline with red styling
+6. Users can import/export their experiments in JSON format containing both the template and context using the
+   respective buttons
