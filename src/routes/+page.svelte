@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { initTera, renderTemplate } from "$lib/tera";
+  import { initTera, renderTemplate, type TeraVersion } from "$lib/tera";
   import { downloadPlaygroundFile, openFileDialog, parseImportData } from "$lib/playground-file";
   import { emojify } from "$lib/emoji";
 
@@ -13,6 +13,7 @@
   let importError = $state("");
   let autoFormatOnBlur = $state(true);
   let renderEmojis = $state(false);
+  let teraVersion = $state<TeraVersion>("v1");
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let importErrorTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -40,7 +41,7 @@
       return;
     }
 
-    const result = renderTemplate(template, contextJson);
+    const result = renderTemplate(template, contextJson, teraVersion);
     if ("output" in result) {
       output = result.output;
       error = "";
@@ -148,33 +149,86 @@
   </div>
 {:else}
   <div class="max-w-7xl mx-auto" in:fade={{ duration: 300 }}>
-    <div class="flex items-center justify-end gap-2 mb-4">
-      <button
-        onclick={handleImport}
-        class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
-      >
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-          />
-        </svg>
-        Import
-      </button>
-      <button
-        onclick={handleExport}
-        class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
-      >
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-          />
-        </svg>
-        Export
-      </button>
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Tera Version:</span>
+        <div class="flex rounded-md overflow-hidden border border-gray-300 dark:border-gray-600">
+          <button
+            onclick={() => {
+              teraVersion = "v1";
+              doRender();
+            }}
+            class="px-3 py-1 text-sm font-medium transition-colors"
+            class:bg-blue-500={teraVersion === "v1"}
+            class:text-white={teraVersion === "v1"}
+            class:bg-gray-100={teraVersion !== "v1"}
+            class:dark:bg-gray-800={teraVersion !== "v1"}
+            class:text-gray-700={teraVersion !== "v1"}
+            class:dark:text-gray-300={teraVersion !== "v1"}
+            class:hover:bg-gray-200={teraVersion !== "v1"}
+            class:dark:hover:bg-gray-700={teraVersion !== "v1"}
+          >
+            v1
+          </button>
+          <button
+            onclick={() => {
+              teraVersion = "v2";
+              doRender();
+            }}
+            class="px-3 py-1 text-sm font-medium transition-colors border-l border-gray-300 dark:border-gray-600"
+            class:bg-blue-500={teraVersion === "v2"}
+            class:text-white={teraVersion === "v2"}
+            class:bg-gray-100={teraVersion !== "v2"}
+            class:dark:bg-gray-800={teraVersion !== "v2"}
+            class:text-gray-700={teraVersion !== "v2"}
+            class:dark:text-gray-300={teraVersion !== "v2"}
+            class:hover:bg-gray-200={teraVersion !== "v2"}
+            class:dark:hover:bg-gray-700={teraVersion !== "v2"}
+          >
+            v2
+          </button>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button
+          onclick={handleImport}
+          class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+            />
+          </svg>
+          Import
+        </button>
+        <button
+          onclick={handleExport}
+          class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          Export
+        </button>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -184,9 +238,13 @@
             for="template"
             class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
           >
-            Template (<a class="text-blue-500" href="https://keats.github.io/tera/" target="_blank"
-              >Tera syntax</a
-            >)
+            Template ({#if teraVersion === "v1"}<a
+                class="text-blue-500"
+                href="https://keats.github.io/tera/"
+                target="_blank">Tera v1 syntax</a
+              >{:else}<a class="text-blue-500" href="https://github.com/Keats/tera2" target="_blank"
+                >Tera v2 syntax</a
+              >{/if})
           </label>
           <textarea
             id="template"

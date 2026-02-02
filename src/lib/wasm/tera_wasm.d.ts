@@ -3,7 +3,9 @@
 
 export function init(): void;
 
-export function render(template: string, context_json: string): string;
+export function render_v1(template: string, context_json: string): string;
+
+export function render_v2(template: string, context_json: string): string;
 
 export function slugify(s: string): string;
 
@@ -12,7 +14,8 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly init: () => void;
-    readonly render: (a: number, b: number, c: number, d: number) => [number, number, number, number];
+    readonly render_v1: (a: number, b: number, c: number, d: number) => [number, number, number, number];
+    readonly render_v2: (a: number, b: number, c: number, d: number) => [number, number, number, number];
     readonly slugify: (a: number, b: number) => [number, number];
     readonly __wbindgen_exn_store: (a: number) => void;
     readonly __externref_table_alloc: () => number;
