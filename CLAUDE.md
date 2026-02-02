@@ -71,6 +71,16 @@ cargo fmt
 - Rust toolchain (check `wasm/rust-toolchain.toml`)
 - wasm-pack (`cargo install wasm-pack`)
 
+## Workflow Requirements
+
+After implementing any feature or making code changes, run all CI checks before considering the task complete:
+
+```bash
+bash scripts/check-all.sh
+```
+
+This runs the same checks as CI: Rust formatting, Clippy, JS/TS formatting, ESLint, WASM build, and Svelte type checking.
+
 ## How It Works
 
 1. The Rust WASM module wraps Tera's `one_off()` function for single template rendering
