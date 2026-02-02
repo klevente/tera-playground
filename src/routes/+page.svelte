@@ -194,7 +194,13 @@
           onclick={handleImport}
           class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -207,7 +213,13 @@
           onclick={handleExport}
           class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-600"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -230,10 +242,8 @@
                 class="text-blue-500"
                 href="https://keats.github.io/tera/"
                 target="_blank">Tera v1 syntax</a
-              >{:else}<a
-                class="text-blue-500"
-                href="https://github.com/Keats/tera2"
-                target="_blank">Tera v2 syntax</a
+              >{:else}<a class="text-blue-500" href="https://github.com/Keats/tera2" target="_blank"
+                >Tera v2 syntax</a
               >{/if})
           </label>
           <textarea
