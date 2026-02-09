@@ -328,5 +328,9 @@
         </div>
       </div>
     </div>
+
+    <p class="mt-6 text-center text-xs text-gray-400 dark:text-gray-500">
+      All processing happens locally in your browser. No data is sent to or stored on any server.
+    </p>
   </div>
 {/if}
