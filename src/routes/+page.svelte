@@ -3,6 +3,7 @@
   import { fade } from "svelte/transition";
   import { initTera, renderTemplate, type TeraVersion } from "$lib/tera";
   import { downloadPlaygroundFile, openFileDialog, parseImportData } from "$lib/playground-file";
+  import { encodeShareUrl, decodeShareParam } from "$lib/share";
   import { emojify } from "$lib/emoji";
 
   let template = $state("Hello {{ name }}!");
@@ -14,10 +15,24 @@
   let autoFormatOnBlur = $state(true);
   let renderEmojis = $state(false);
   let teraVersion = $state<TeraVersion>("v1");
+  let shareStatus = $state<"idle" | "copied">("idle");
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let importErrorTimer: ReturnType<typeof setTimeout> | null = null;
+  let shareStatusTimer: ReturnType<typeof setTimeout> | null = null;
 
   onMount(async () => {
+    const params = new URLSearchParams(window.location.search);
+    const shareParam = params.get("s");
+    if (shareParam) {
+      const shared = decodeShareParam(shareParam);
+      if (shared) {
+        template = shared.template;
+        contextJson = shared.context;
+      }
+      // Clean up the URL without reloading the page
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+
     try {
       await initTera();
       isLoading = false;
@@ -100,6 +115,18 @@
     template = result.template;
     contextJson = result.contextJson;
     doRender();
+  }
+
+  async function handleShare() {
+    const url = encodeShareUrl({ template, context: contextJson });
+    await navigator.clipboard.writeText(url);
+    shareStatus = "copied";
+    if (shareStatusTimer) {
+      clearTimeout(shareStatusTimer);
+    }
+    shareStatusTimer = setTimeout(() => {
+      shareStatus = "idle";
+    }, 2000);
   }
 </script>
 
@@ -227,6 +254,38 @@
             />
           </svg>
           Export
+        </button>
+        <button
+          onclick={handleShare}
+          class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
+        >
+          {#if shareStatus === "copied"}
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Copied!
+          {:else}
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+              />
+            </svg>
+            Share
+          {/if}
         </button>
       </div>
     </div>
