@@ -8,7 +8,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 tera = "1.20.1"
-tera2 = { package = "tera", git = "https://github.com/Keats/tera2", version = "2.0.0" }
+tera2 = { package = "tera", git = "https://github.com/Keats/tera2", rev = "a7949c007f2517c1877dce9ef49f27650812d27b", version = "2.0.0-alpha.1" }
 wasm-bindgen = "0.2.108"
 serde_json = "1.0.149"
 console_error_panic_hook = "0.1.7"
